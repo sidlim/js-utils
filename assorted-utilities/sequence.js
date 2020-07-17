@@ -1,3 +1,6 @@
+/**
+ * A Sequence class for better tools for iterables. Everything is done with deferred execution.
+ */
 class Sequence {
 
     /**
