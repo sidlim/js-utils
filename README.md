@@ -1,153 +1,173 @@
 # js-utils
 A set of tools to make the creation of web content easier.
-## Classes
+## Modules/Code Organization
+- `assorted-utilities/`
+  - [sequence.js](##Sequence) - Better tools for iterables.
+- `data-structures/`
+  - [stack.js](##Stack) - Implementation of a stack.
+  - [queue.js](##Queue) - Implementation of a queue.
+- `graphs/`
+  - [adj-list.js](##Adjacency-List) - Implementation of an adjacency list.
+  - [transition-matrix.js](##Transition-Matrix) - `WIP.`
+  - [graph.js](##Graph) - Graph class.
 
-<dl>
-<dt><a href="#Sequence">Sequence</a></dt>
-<dd><p>A Sequence class for better tools for iterables. Everything is done with deferred execution.</p>
-</dd>
-<dt><a href="#Stack">Stack</a></dt>
-<dd><p>A Stack class built on an array.</p>
-</dd>
-<dt><a href="#Queue">Queue</a></dt>
-<dd><p>A queue class built on an array.</p>
-</dd>
-<dt><a href="#Adjacency_List">Adjacency_List</a></dt>
-<dd><p>An Adjacency List class, for use in graphs. Stores connectivity data.</p>
-</dd>
-<dt><a href="#Graph">Graph</a></dt>
-<dd><p>An unweighted Graph class. Stores vertex information and wraps the adjacency matrix and adjacency 
-list classes to provide functionality like search, ordering, dynamic programming, etc.</p>
-</dd>
-</dl>
+## `Sequence`
+***
+A Sequence class for better tools for iterables.  
+Methods:
+- [`constructor`](###Sequence.constructor) `  :: Iterable -> Sequence ` - Turn an iterable into a Sequence object.
+- [`Sequence.go`](###Sequence.go) `  :: void -> Iterable ` - Get a generator from a Sequence object.
+- [`Sequence.map`](###Sequence.map) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
+- [`Sequence.filter`](###Sequence.filter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
+- [`Sequence.slice`](###Sequence.slice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
+- [`Sequence.concat`](###Sequence.concat) `  :: (Iterable | Sequence) -> Sequence` - Compose a function with the current Sequence object.
+- [`Sequence.zip`](###Sequence.zip) `  :: (Iterable | Sequence) -> Function (a -> b -> c) -> Sequence` - Zip the Sequence object with another.
+- [`Sequence.integrate`](###Sequence.integrate) `  :: Function (a -> b) -> b -> Sequence` - Make a sequence of reductions based on the current Sequence.
 
-<a name="Sequence"></a>
 
-## Sequence
-A Sequence class for better tools for iterables. Everything is done with deferred execution.
-
-**Kind**: global class  
-
-* [Sequence](#Sequence)
-    * [new Sequence(iterable)](#new_Sequence_new)
-    * _instance_
-        * [.go()](#Sequence+go)
-        * [.map(mapping)](#Sequence+map) ⇒ [<code>Sequence</code>](#Sequence)
-        * [.filter(key)](#Sequence+filter) ⇒ [<code>Sequence</code>](#Sequence)
-        * [.slice([start], [end])](#Sequence+slice) ⇒ [<code>Sequence</code>](#Sequence)
-        * [.concat(...iterables)](#Sequence+concat) ⇒ [<code>Sequence</code>](#Sequence)
-        * [.zip(iterable, [packager])](#Sequence+zip) ⇒ [<code>Sequence</code>](#Sequence)
-        * [.integrate(reduction, base_case)](#Sequence+integrate) ⇒ [<code>Sequence</code>](#Sequence)
-    * _static_
-        * [.get_iterator(The)](#Sequence.get_iterator) ⇒ <code>Iterator</code>
-
-<a name="new_Sequence_new"></a>
-
-### new Sequence(iterable)
-Construct a more functional iterable (generator).
+### `Sequence.constructor`
+Constructor for the Sequence class.
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| iterable | <code>Generator</code> | <code></code> | The iterable (generator) to convert. |
+| iterable | <code>Iterable</code> | <code>[]</code> | The iterable to convert.
 
-<a name="Sequence+go"></a>
+Example:
+```javascript
+    // Set up a generator function for use below:
+    function * numbers() {
+        let i = 1;
+        while (true) {
+            yield i++;
+        }
+        return;
+    }
 
-### sequence.go()
-Iterate over the object.
+    let Natural_numbers = new Sequence(numbers);
+    let Pi_digits = new Sequence([3,1,4,1,5,9,2,6,5,3,5]);
+    let Empty = new Sequence();
+```
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-<a name="Sequence+map"></a>
+### `Sequence.go`
+Iterate over the Sequence using a `for..of` loop. Or just work with the iterator directly.  
 
-### sequence.map(mapping) ⇒ [<code>Sequence</code>](#Sequence)
-Compose a function with an iterator - do Array.map on arbitrary iterators.
+Example:
+```javascript
+    for (var digit of Pi_digits.go()) {
+        console.log('The next digit of pi is ${digit}', digit);
+    }
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - A sequence whose values are the provided mapping applied to the provided iterator.  
+    let weird_iterator = function * () {
+        yield Pi_digits *
+        yield 'That\'s all I got!'
+    }
+```
+
+### `Sequence.map`
+Compose a function with an iterator - like Array.map, but on arbitrary iterators. Uses deferred execution.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| mapping | <code>function</code> | The mapping to apply to each of the iterator values. |
+| mapping | <code>function :: a -> i -> b</code> | The mapping to apply to each of the iterator values. Arguments passed are `a` (the iterator value itself) and the index of the element in the iterator, `i`. |
 
-<a name="Sequence+filter"></a>
+Example:
+```javascript
+    let Evens = Natural_numbers.map((n) => (n * 2));
+    let Squares = Natural_numbers.map((n) => (n * n));
 
-### sequence.filter(key) ⇒ [<code>Sequence</code>](#Sequence)
-Filter out values from an iterator - do Array.filter on arbitrary iterators.
+    // Map on index instead:
+    for (digit of Pi_digits.map((d, i) => (d * (10 ** -i))).go()) {
+        console.log('I\'ve broken pi up into its decimal places! Here\'s one: ${digit}', digit);
+    }
+```
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - A sequence filtering out values according to the key function.  
+### `Sequence.filter`
+Filter out values from an iterator - like Array.filter, but on arbitrary iterators. Uses deferred execution.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| key | <code>function</code> | The function describing whether to keep a value or not. |
+| key | <code>function :: a -> i -> Bool</code> | The key function describing whether to keep the value. Arguments passed are `a` (the iterator value itself) and the index of the element in the iterator, `i`. |
 
-<a name="Sequence+slice"></a>
+Example:
+```javascript
+    let Even_pi_digits = Pi_digits.filter((a) => (a % 2 == 0));
 
-### sequence.slice([start], [end]) ⇒ [<code>Sequence</code>](#Sequence)
-Slice an iterator - just like Array.slice, but both a start and an end must be provided. 
+    // Filter on index instead:
+    let Odds = Natural_numbers.filter((a, i) => (i % 2 == 1));
+```
+
+### `Sequence.slice`
+Slice an iterator - like Array.slice, but on arbitrary iterators. Both a start and an end must be provided. Uses deferred execution.
 If both bounds are finite, the iterable will also be finite, making behavior different from just filtering on element index.
-
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - The sliced iterator. If the bounds are finite, the iterable will also be finite.  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [start] | <code>number</code> | <code>0</code> | The start index for the slice (inclusive). |
 | [end] | <code>number</code> | <code>Infinity</code> | The end index for the slice (exclusive). |
 
-<a name="Sequence+concat"></a>
+Example:
+```javascript
+    let First_three_pi_digits = Pi_digits.slice(0, 3);
 
-### sequence.concat(...iterables) ⇒ [<code>Sequence</code>](#Sequence)
-Concatenate an iterable (generator) to the sequence.
+    // Turn an infinite iterator into a finite one:
+    let Double_digit_naturals = Natural_numbers.slice(9, 99);
+```
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - The concatenated sequence.  
+### `Sequence.concat`
+Concatenate iterables to the sequence - like Array.concat, but on arbitrary iterators. Uses deferred execution.
+Notice that a finite sequence concatenated to (after) an infinite one will never yield through the generator.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ...iterables | <code>Array.&lt;Iterable&gt;</code> \| [<code>Array.&lt;Sequence&gt;</code>](#Sequence) | The iterables (generators) to concatenate to the sequence. |
+| ...iterables | <code>Array.&lt;Iterable \| Sequence&gt;</code> | The iterables to concatenate to the sequence. |
 
-<a name="Sequence+zip"></a>
+Example:
+```javascript
+    let Pi_digits_twice = Pi_digits.concat(Pi_digits);
 
-### sequence.zip(iterable, [packager]) ⇒ [<code>Sequence</code>](#Sequence)
-Zip together two sequences.
+    // Infinite/finite case:
+    let Double_digit_naturals = Natural_numbers.slice(9, 99);
+    let Double_digit_naturals_twice = Double_digit_naturals.concat(Double_digit_naturals); // Works as expected
+    let attempt_2 = Natural_numbers.filter((a) => (a > 9 && a < 100));
+    let attempt_2_twice = attempt_2.concat(attempt_2); // We hit an infinite loop before we can get to the second run of double-digit natural numbers
+```
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - A sequence of elements zipped together as described by the packager function.  
+### `Sequence.zip`
+Zip together two sequences. Terminates when the shorter sequence ends. Uses deferred execution. You can provide a packaging function to zip the sequences together with a custom container.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | iterable | <code>Iterable</code> |  | The second sequence to use for the zip operation. |
-| [packager] | <code>\*</code> | <code>(x,y) &#x3D;&gt; [x,y]</code> | The function describing how to package the sequences. |
+| [packager] | <code>function :: a -> b -> Object </code> | <code>(x,y) &#x3D;&gt; [x,y]</code> | The function describing how to package the sequences. By default, packs into arrays of 2. |
 
-<a name="Sequence+integrate"></a>
+Example:
+```javascript
+    let Pi_digits_and_Evens = Pi_digits.zip(Evens); // Will spit out 10 pairs [x, y] where x is a digit of pi and y is an even.
 
-### sequence.integrate(reduction, base_case) ⇒ [<code>Sequence</code>](#Sequence)
-Integrate a sequence - create a new sequence given a reduction.
+    // Custom packaging:
+    let Squares_and_roots = Squares.zip(Natural_numbers, (s,r) => {'square': s, 'root': r});
+```
 
-**Kind**: instance method of [<code>Sequence</code>](#Sequence)  
-**Returns**: [<code>Sequence</code>](#Sequence) - A reduction of the sequence, term by term. It's kind of like riemann summing, hence "Integrate".  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| reduction | <code>function</code> | The reduction to apply to the sequence. |
-| base_case | <code>\*</code> | The base case of the reduction. |
-
-<a name="Sequence.get_iterator"></a>
-
-### Sequence.get\_iterator(The) ⇒ <code>Iterator</code>
-Get an external iterator from an iterable (generator).
-
-**Kind**: static method of [<code>Sequence</code>](#Sequence)  
-**Returns**: <code>Iterator</code> - The iterator from the iterable (generator) object  
+### `Sequence.integrate`
+Integrate a sequence - create a new sequence given a reduction. Kind of like Array.reduce, but instead you get the partial reductions (like partial sums in a series). Uses deferred execution. Kind of like Riemann Sums; hence "integrate".
 
 | Param | Type | Description |
 | --- | --- | --- |
-| The | <code>Iterable</code> \| [<code>Sequence</code>](#Sequence) | iterable (generator) to extract an iterator from |
+| reduction | <code>function :: a -> b </code> | The reduction to apply to the sequence. |
+| base_case | <code>b</code> | The base case of the reduction. |
 
-<a name="Stack"></a>
+### `Sequence.get`
+Get an external iterator from an iterable (generator). Really only meant for internal use, but private methods aren't a thing yet.
 
-## Stack
+| Param | Type | Description |
+| --- | --- | --- |
+| iterable | <code>Iterable</code> \| <code>Sequence</code> | iterable (generator) to extract an iterator from |
+
+
+**Warning**: From here on out the documentation looks real messy. I'll get to it soon so it's less of an eyesore.
+
+## `Stack`
 A Stack class built on an array.
 
 **Kind**: global class  
