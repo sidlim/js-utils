@@ -2,27 +2,27 @@
 A set of tools to make the creation of web content easier.
 ## Modules/Code Organization
 - `assorted-utilities/`
-  - [sequence.js](##Sequence) - Better tools for iterables.
+  - [sequence.js](#Sequence) - Better tools for iterables.
 - `data-structures/`
-  - [stack.js](##Stack) - Implementation of a stack.
-  - [queue.js](##Queue) - Implementation of a queue.
+  - [stack.js](#Stack) - Implementation of a stack.
+  - [queue.js](#Queue) - Implementation of a queue.
 - `graphs/`
-  - [adj-list.js](##Adjacency-List) - Implementation of an adjacency list.
-  - [transition-matrix.js](##Transition-Matrix) - `WIP.`
-  - [graph.js](##Graph) - Graph class.
+  - [adj-list.js](#Adjacency-List) - Implementation of an adjacency list.
+  - [transition-matrix.js](#Transition-Matrix) - `WIP.`
+  - [graph.js](#Graph) - Graph class.
 
 ## `Sequence`
 ***
 A Sequence class for better tools for iterables.  
 Methods:
-- [`constructor`](###Sequence.constructor) `  :: Iterable -> Sequence ` - Turn an iterable into a Sequence object.
-- [`Sequence.go`](###Sequence.go) `  :: void -> Iterable ` - Get a generator from a Sequence object.
-- [`Sequence.map`](###Sequence.map) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
-- [`Sequence.filter`](###Sequence.filter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
-- [`Sequence.slice`](###Sequence.slice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
-- [`Sequence.concat`](###Sequence.concat) `  :: (Iterable | Sequence) -> Sequence` - Compose a function with the current Sequence object.
-- [`Sequence.zip`](###Sequence.zip) `  :: (Iterable | Sequence) -> Function (a -> b -> c) -> Sequence` - Zip the Sequence object with another.
-- [`Sequence.integrate`](###Sequence.integrate) `  :: Function (a -> b) -> b -> Sequence` - Make a sequence of reductions based on the current Sequence.
+- [`constructor`](#Sequenceconstructor) `  :: Iterable -> Sequence ` - Turn an iterable into a Sequence object.
+- [`Sequence.go`](#Sequencego) `  :: void -> Iterable ` - Get a generator from a Sequence object.
+- [`Sequence.map`](#Sequencemap) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
+- [`Sequence.filter`](#Sequencefilter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
+- [`Sequence.slice`](#Sequenceslice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
+- [`Sequence.concat`](#Sequenceconcat) `  :: (Iterable | Sequence) -> Sequence` - Compose a function with the current Sequence object.
+- [`Sequence.zip`](#Sequencezip) `  :: (Iterable | Sequence) -> Function (a -> b -> c) -> Sequence` - Zip the Sequence object with another.
+- [`Sequence.integrate`](#Sequenceintegrate) `  :: Function (a -> b) -> b -> Sequence` - Make a sequence of reductions based on the current Sequence.
 
 
 ### `Sequence.constructor`
