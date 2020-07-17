@@ -20,7 +20,7 @@ class Transition_Matrix {
 
     /**
      * Add a vertex to the graph after initialization.
-     * @param {*[]} neighbors A collection (array) consisting of neighbor data.
+     * @param {number[]} neighbors A collection (array) consisting of neighbor data.
      */
     add_vertex(neighbors) {
         this.edge_matrix[this.vertex_count] = neighbors;
@@ -30,7 +30,7 @@ class Transition_Matrix {
     /**
      * Get the neighbors (successors) of a vertex.
      * @param {number} vertex The vertex whose neighbors need to be found.
-     * @returns {*[]} The collection of neighboring (successor) vertices.
+     * @returns {[]} The collection of neighboring (successor) vertices.
      */
     get_neighbors(vertex) {
         return(this.edge_matrix[vertex]);

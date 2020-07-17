@@ -101,7 +101,7 @@ class Queue {
 
     /**
      * Add multiple elements to the queue.
-     * @param {*[]} elements As an iterable, the collection of elements to add to the queue.
+     * @param {Iterable} elements As an iterable, the collection of elements to add to the queue.
      */
     put(elements) {
 

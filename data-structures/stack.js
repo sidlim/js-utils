@@ -73,7 +73,7 @@ class Stack {
 
     /**
      * Add multiple elements to the stack.
-     * @param {*[]} elements As an iterable, the collection of elements to add to the stack.
+     * @param {Iterable} elements As an iterable, the collection of elements to add to the stack.
      */
     put(elements) {
 
