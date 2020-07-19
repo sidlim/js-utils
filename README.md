@@ -170,7 +170,7 @@ Get an external iterator from an iterable (generator). Really only meant for int
 
 
 ## `Stack`
-A Stack class built on an array. Used primarily as part of graph search.
+A Stack class built on an array. Used primarily as part of graph search.  
 Methods:
  - [`constructor`](#Stackconstructor) `  :: Number -> Stack ` - Make a stack object.
  - [`is_full`](#Stackis_full) `  :: Boolean ` - Check if the stack is full.
@@ -277,7 +277,7 @@ Example:
 ```
 
 ## `Queue`
-A Queue class built on an array. Used primarily as part of graph search.
+A Queue class built on an array. Used primarily as part of graph search.  
 Methods:
  - [`constructor`](#Queueconstructor) `  :: Number -> Queue ` - Make a queue object.
  - [`is_full`](#Queueis_full) `  :: Boolean ` - Check if the queue is full.
@@ -384,110 +384,154 @@ Example:
 
 
 ## Adjacency\_List
-An Adjacency List class, for use in graphs. Stores connectivity data.
+An Adjacency List class, for use in graphs. Stores connectivity data.  
+Methods:
+ - [`constructor`](#Adjacency_Listconstructor) ` :: Adjacency_List` - Initialize an adjacency list.
+ - [`add_vertex`](#Adjacency_Listadd_vertex)   ` :: number[] -> void` - Add a vertex to the adjacency list.
+ - [`get_neighbors`](#Adjacency_Listget_neighbors) ` :: number -> number[]` - Get a list of neighbors given a vertex id.
 
-**Kind**: global class  
-
-* [Adjacency_List](#Adjacency_List)
-    * [new Adjacency_List([adj_matrix], [key])](#new_Adjacency_List_new)
-    * [.add_vertex(neighbors)](#Adjacency_List+add_vertex)
-    * [.get_neighbors(vertex)](#Adjacency_List+get_neighbors) ⇒ <code>Array.&lt;number&gt;</code>
-
-<a name="new_Adjacency_List_new"></a>
-
-### new Adjacency\_List([adj_matrix], [key])
+### `Adjacency_List.constructor`
 Build an adjacency list.
-
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [adj_matrix] | <code>Array.&lt;Array.&lt;number&gt;&gt;</code> | <code>[]</code> | An adjacency matrix to convert into an adjacency list. |
-| [key] | <code>function</code> | <code>(x) &#x3D;&gt; x</code> | A key function - returns true if the edge data represents a connection. |
 
-<a name="Adjacency_List+add_vertex"></a>
+Example:
+```javascript
+    let connected_graph_2 = new Adjacency_List([[0, 1], [1, 0]]);
+    let weird_graph = new Adjacency_List();
+```
 
-### adjacency_List.add\_vertex(neighbors)
+### `Adjacency_List.add_vertex`
 Add a vertex to the graph after initialization.
-
-**Kind**: instance method of [<code>Adjacency\_List</code>](#Adjacency_List)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | neighbors | <code>Array.&lt;number&gt;</code> | A collection of the added vertex's neighboring vertices. |
 
-<a name="Adjacency_List+get_neighbors"></a>
+Example:
+```javascript
+    // Turn weird_graph isomorphic to connected_graph_2:
+    weird_graph.add([1]);
+    weird_graph.add([0]);
 
-### adjacency_List.get\_neighbors(vertex) ⇒ <code>Array.&lt;number&gt;</code>
+    // Add a third source vertex connected to vertex 1 and vertex 0:
+    weird_graph.add([1, 0]);
+```
+
+### `Adjacency_List.get_neighbors`
 Get the neighbors (successors) of a vertex.
-
-**Kind**: instance method of [<code>Adjacency\_List</code>](#Adjacency_List)  
-**Returns**: <code>Array.&lt;number&gt;</code> - The collection (Set) of neighboring (successor) vertices.  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | vertex | <code>number</code> | The vertex whose neighbors need to be found. |
 
-<a name="Graph"></a>
+Example:
+```javascript
+    for (var vertex of weird_graph.get_neighbors(2)) {
+        console.log(vertex);
+    }
+
+    // Output:
+    // 1
+    // 0
+```
 
 ## Graph
 An unweighted Graph class. Stores vertex information and wraps the adjacency matrix and adjacency 
-list classes to provide functionality like search, ordering, dynamic programming, etc.
+list classes to provide functionality like search, ordering, dynamic programming, etc.  
+Methods:
+ - [`constructor`](#Graphconstructor) ` :: Adjacency_List -> Object -> Graph` - Construct a graph.
+ - [`add_vertex`](#Graphadd_vertex)  ` :: number[] -> Object -> void` - Add a vertex to the graph.
+ - [`calc_outdegrees`](#Graphcalc_outdegrees) ` :: number[]` - Calculate outdegrees for each vertex.
+ - [`calc_indegrees`](#Graphcalc_indegrees) ` :: number[]` - Calculate indegrees for each vertex.
+ - [`search_from`](#Graphsearch_from) ` :: number -> (Stack | Queue) -> Iterator` - Get a DFS/BFS/some other search ordering of the vertices.
+ - [`topological_order`](#Graphtopological_order) ` :: Iterator` - Go over the graph in topological order, given that it is a DAG.
 
-**Kind**: global class  
+### `Graph.constructor`
+Construct a graph.
 
-* [Graph](#Graph)
-    * [.add_vertex(neighbors, vertex_data)](#Graph+add_vertex)
-    * [.calc_outdegrees()](#Graph+calc_outdegrees) ⇒ <code>Array.&lt;number&gt;</code>
-    * [.calc_indegrees()](#Graph+calc_indegrees) ⇒ <code>Array.&lt;number&gt;</code>
-    * [.search_from(start, [data_structure])](#Graph+search_from)
-    * [.topological_order([data_structure])](#Graph+topological_order)
+| Param | Type | Default | Description |
+| --- | --- | --- |
+| [E] | <code>Adjacency_List</code> | <code>null</code> | An Adjacency List to represent the graph. |
+| [V_data] | <code>Object</code> | <code>{}</code> | Additional data to be added to the graph |
 
-<a name="Graph+add_vertex"></a>
+Example:
+```javascript
+    let simple_graph = new Graph();
+```
 
-### graph.add\_vertex(neighbors, vertex_data)
+### `Graph.add_vertex`
 Add a vertex to the graph.
 
-**Kind**: instance method of [<code>Graph</code>](#Graph)  
-
-| Param | Type | Description |
+| Param | Type | Default | Description |
 | --- | --- | --- |
-| neighbors | <code>Array.&lt;number&gt;</code> | The neighbors of the node being added |
-| vertex_data | <code>Object</code> | Additional data to be added to the graph |
+| neighbors | <code>Array.&lt;number&gt;</code> |  | The neighbors of the node being added |
+| [vertex_data] | <code>Object</code> | <code>{}</code> | Additional data to be added to the graph |
 
-<a name="Graph+calc_outdegrees"></a>
+Example:
+```javascript
+    simple_graph.add_vertex([1,2]);
+    simple_graph.add_vertex([2]);
+    simple_graph.add_vertex([3]);
+    simple_graph.add_vertex([]);
+```
 
-### graph.calc\_outdegrees() ⇒ <code>Array.&lt;number&gt;</code>
+### `Graph.calc_outdegrees`
 Calculate node outdegrees.
 
-**Kind**: instance method of [<code>Graph</code>](#Graph)  
-**Returns**: <code>Array.&lt;number&gt;</code> - List (array) of outdegrees of graph nodes.  
-<a name="Graph+calc_indegrees"></a>
+Example:
+```javascript
+    console.log(simple_graph.calc_outdegrees());
+    // Logs [2, 1, 1, 0]
+```
 
-### graph.calc\_indegrees() ⇒ <code>Array.&lt;number&gt;</code>
+### `Graph.calc_indegrees`
 Calcuate node outdegrees.
 
-**Kind**: instance method of [<code>Graph</code>](#Graph)  
-**Returns**: <code>Array.&lt;number&gt;</code> - List (array) of indegrees of graph nodes.  
-<a name="Graph+search_from"></a>
+Example:
+```javascript
+    console.log(simple_graph.calc_indegrees());
+    // Logs [0, 1, 2, 1]
+```
 
-### graph.search\_from(start, [data_structure])
+### `Graph.search_from`
 Generator for a graph search ordering.
-
-**Kind**: instance method of [<code>Graph</code>](#Graph)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | start | <code>\*</code> |  | The node to start the ordering on |
 | [data_structure] | <code>\*</code> | <code>Queue</code> | The data structure to use. Affects ordering (e.g., Stack -> DFS, Queue -> BFS, min-Heap -> Djikstra). |
 
-<a name="Graph+topological_order"></a>
+Example:
+```javascript
+    for (var vertex of simple_graph.search_from(0, Stack)) {
+        console.log(vertex);
+    }
+    // Output:
+    // 0
+    // 2
+    // 3
+    // 1
+```
 
-### graph.topological\_order([data_structure])
+### `Graph.topological_order`
 Generator for a topological ordering in a DAG.
-
-**Kind**: instance method of [<code>Graph</code>](#Graph)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [data_structure] | <code>\*</code> | <code>Queue</code> | The data structure to use. Permutes ordering (up to topological order). |
+
+Example:
+```javascript
+    for (var vertex of simple_graph.topological_order()) {
+        console.log(vertex);
+    }
+    // Output:
+    // 0
+    // 1
+    // 2
+    // 3
+```
 

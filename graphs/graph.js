@@ -7,6 +7,12 @@ class Graph {
     V_data;
     E;
 
+    /**
+     * Build a Graph.
+     * @constructor
+     * @param {Adjacency_List} [E = null] The adjacency list that holds edge data.
+     * @param {Object} [V_data = {}] Vertex data, arranged as arrays that are slots of an object.
+     */
     constructor(E = null, V_data = {}) {
 
         this.V_data = V_data;
