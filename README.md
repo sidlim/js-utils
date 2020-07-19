@@ -210,7 +210,7 @@ Example:
     my_stack.is_full(); // True, since the capacity is 40 and automatic resizing has not happened.
 ```
 
-### stack.resize()
+### `Stack.resize`
 Double the capacity of the stack.
 
 Example:
@@ -222,7 +222,7 @@ Example:
     my_stack.is_full(); // False - the capacity is now 80.
 ```
 
-### stack.is\_empty() ⇒ <code>boolean</code>
+### `Stack.is_empty`
 Find out if the stack is empty.
 
 Example:
@@ -276,96 +276,112 @@ Example:
     console.log(my_stack.pop()); // Logs 40
 ```
 
-<a name="Queue"></a>
+## `Queue`
+A Queue class built on an array. Used primarily as part of graph search.
+Methods:
+ - [`constructor`](#Queueconstructor) `  :: Number -> Queue ` - Make a queue object.
+ - [`is_full`](#Queueis_full) `  :: Boolean ` - Check if the queue is full.
+ - [`resize`](#Queueresize)   `  :: Number -> void ` - Double the queue capacity.
+ - [`is_empty`](#Queueis_empty) `  :: Boolean ` - Check if the queue is empty.
+ - [`enqueue`](#Queueenqueue) `  :: a -> void ` - Add an element onto the beginning of the queue.
+ - [`dequeue`](#Queuedequeue) `  :: a ` - Get an element from the end of the queue
+ - [`put`](#Queueput) ` :: Iterable -> void ` - Put multiple things onto the beginning of the queue.
 
-## Queue
-A queue class built on an array.
 
-**Kind**: global class  
-
-* [Queue](#Queue)
-    * [new Queue([queue_size])](#new_Queue_new)
-    * [.inc_queue_ptr(pos)](#Queue+inc_queue_ptr) ⇒ <code>number</code>
-    * [.is_full()](#Queue+is_full) ⇒ <code>boolean</code>
-    * [.resize()](#Queue+resize)
-    * [.is_empty()](#Queue+is_empty) ⇒ <code>boolean</code>
-    * [.enqueue(element)](#Queue+enqueue)
-    * [.dequeue()](#Queue+dequeue) ⇒ <code>\*</code>
-    * [.put(elements)](#Queue+put)
-
-<a name="new_Queue_new"></a>
-
-### new Queue([queue_size])
-Builds a queue.
+### `Queue.constructor`
+Builds a Queue.
 
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [queue_size] | <code>number</code> | <code>1000</code> | The initial queue capacity. |
 
-<a name="Queue+inc_queue_ptr"></a>
+Example:
+```javascript
+    // Make a queue with initial capacity 40.
+    let my_queue = new Queue(40);
+```
 
-### queue.inc\_queue\_ptr(pos) ⇒ <code>number</code>
-Find the index of the next element in the queue.
-TODO: Make this a private method when support increases.
-
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
-**Returns**: <code>number</code> - The next position in the queue.  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| pos | <code>number</code> | The current position in the queue. |
-
-<a name="Queue+is_full"></a>
-
-### queue.is\_full() ⇒ <code>boolean</code>
+### `Queue.is_full`
 Find out if the queue is full.
 
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
-**Returns**: <code>boolean</code> - True if the queue is full.  
-<a name="Queue+resize"></a>
+Example:
+```javascript
+    my_queue.is_full(); // False here
+
+    // Load up the queue:
+    for (let i = 0; i < 40; i++) {
+        my_queue.enqueue(i);
+    }
+
+    my_queue.is_full(); // True, since the capacity is 40 and automatic resizing has not happened.
+```
 
 ### queue.resize()
 Double the capacity of the queue.
 
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
-<a name="Queue+is_empty"></a>
+Example:
+```javascript
+    my_queue.is_full(); // True here, since it's been loaded up (continuation of prior example)
+
+    my_queue.resize();
+
+    my_queue.is_full(); // False - the capacity is now 80.
+```
 
 ### queue.is\_empty() ⇒ <code>boolean</code>
 Find out if the queue is empty.
 
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
-**Returns**: <code>boolean</code> - True if the queue is empty.  
-<a name="Queue+enqueue"></a>
+Example:
+```javascript
+    my_queue.is_empty(); // False here, since 40 elements are in the queue (continuation of prior example)
 
-### queue.enqueue(element)
+    // Unload the queue:
+    for (let i = 0; i < 40; i++) {
+        my_queue.dequeue();
+    }
+
+    my_queue.is_empty(); // True, since there is nothing left in the queue.
+```
+
+### `Queue.enqueue`
 Add an element to the queue.
-
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| element | <code>\*</code> | The element to insert into the queue. |
+| element | <code>\*</code> | The element to add to the queue. |
 
-<a name="Queue+dequeue"></a>
+Example:
+```javascript
+    // Load up the queue:
+    for (let i = 0; i < 40; i++) {
+        my_queue.enqueue(i);
+    }
+```
 
-### queue.dequeue() ⇒ <code>\*</code>
-Remove an element from the queue.
+### `Queue.dequeue`
+Remove and return an element from the queue.
 
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
-**Returns**: <code>\*</code> - The element removed from the queue.  
-<a name="Queue+put"></a>
+Example:
+```javascript
+    // Continued from prior example, where queue is filled with numbers: 0, 1, ... 39:
+    console.log(my_queue.dequeue()); // Logs 0
+    console.log(my_queue.dequeue()); // Logs 1
+```
 
-### queue.put(elements)
-Add multiple elements to the queue.
-
-**Kind**: instance method of [<code>Queue</code>](#Queue)  
+### `Queue.put`
+Add multiple elements to the queue in order.
 
 | Param | Type | Description |
 | --- | --- | --- |
 | elements | <code>Iterable</code> | As an iterable, the collection of elements to add to the queue. |
 
-<a name="Adjacency_List"></a>
+Example:
+```javascript
+    // Continued from prior example - my_queue is filled with numbers from 0 to 37
+    my_queue.put([38, 39, 40]);
+```
+
 
 ## Adjacency\_List
 An Adjacency List class, for use in graphs. Stores connectivity data.
