@@ -12,17 +12,16 @@ A set of tools to make the creation of web content easier.
   - [graph.js](#Graph) - Graph class.
 
 ## `Sequence`
-***
 A Sequence class for better tools for iterables.  
 Methods:
 - [`constructor`](#Sequenceconstructor) `  :: Iterable -> Sequence ` - Turn an iterable into a Sequence object.
-- [`Sequence.go`](#Sequencego) `  :: void -> Iterable ` - Get a generator from a Sequence object.
-- [`Sequence.map`](#Sequencemap) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
-- [`Sequence.filter`](#Sequencefilter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
-- [`Sequence.slice`](#Sequenceslice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
-- [`Sequence.concat`](#Sequenceconcat) `  :: (Iterable | Sequence) -> Sequence` - Compose a function with the current Sequence object.
-- [`Sequence.zip`](#Sequencezip) `  :: (Iterable | Sequence) -> Function (a -> b -> c) -> Sequence` - Zip the Sequence object with another.
-- [`Sequence.integrate`](#Sequenceintegrate) `  :: Function (a -> b) -> b -> Sequence` - Make a sequence of reductions based on the current Sequence.
+- [`go`](#Sequencego) `  :: void -> Iterable ` - Get a generator from a Sequence object.
+- [`map`](#Sequencemap) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
+- [`filter`](#Sequencefilter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
+- [`slice`](#Sequenceslice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
+- [`concat`](#Sequenceconcat) `  :: (Iterable | Sequence) -> Sequence` - Compose a function with the current Sequence object.
+- [`zip`](#Sequencezip) `  :: (Iterable | Sequence) -> Function (a -> b -> c) -> Sequence` - Zip the Sequence object with another.
+- [`integrate`](#Sequenceintegrate) `  :: Function (a -> b) -> b -> Sequence` - Make a sequence of reductions based on the current Sequence.
 
 
 ### `Sequence.constructor`
@@ -157,6 +156,11 @@ Integrate a sequence - create a new sequence given a reduction. Kind of like Arr
 | reduction | <code>function :: a -> b </code> | The reduction to apply to the sequence. |
 | base_case | <code>b</code> | The base case of the reduction. |
 
+Example:
+```javascript
+    let Triangular_numbers = Natural_numbers.integrate((x, y) => (x + y), 0); // According to numberphile lore the last member of this sequence is -1/12.
+```
+
 ### `Sequence.get`
 Get an external iterator from an iterable (generator). Really only meant for internal use, but private methods aren't a thing yet.
 
@@ -165,25 +169,19 @@ Get an external iterator from an iterable (generator). Really only meant for int
 | iterable | <code>Iterable</code> \| <code>Sequence</code> | iterable (generator) to extract an iterator from |
 
 
-**Warning**: From here on out the documentation looks real messy. I'll get to it soon so it's less of an eyesore.
-
 ## `Stack`
-A Stack class built on an array.
+A Stack class built on an array. Used primarily as part of graph search.
+Methods:
+ - [`constructor`](#Stackconstructor) `  :: Number -> Stack ` - Make a stack object.
+ - [`is_full`](#Stackis_full) `  :: Boolean ` - Check if the stack is full.
+ - [`resize`](#Stackresize)   `  :: Number -> void ` - Double the stack capacity.
+ - [`is_empty`](#Stackis_empty) `  :: Boolean ` - Check if the stack is empty.
+ - [`push`](#Stackpush) `  :: a -> void ` - Add an element onto the top of the stack.
+ - [`pop`](#Stackpop) `  :: a ` - Get an element from the top of the stack
+ - [`put`](#Stackput) ` :: Iterable -> void ` - Put multiple things onto the top of the stack.
 
-**Kind**: global class  
 
-* [Stack](#Stack)
-    * [new Stack([stack_size])](#new_Stack_new)
-    * [.is_full()](#Stack+is_full) ⇒ <code>boolean</code>
-    * [.resize()](#Stack+resize)
-    * [.is_empty()](#Stack+is_empty) ⇒ <code>boolean</code>
-    * [.push(element)](#Stack+push)
-    * [.pop()](#Stack+pop) ⇒ <code>\*</code>
-    * [.put(elements)](#Stack+put)
-
-<a name="new_Stack_new"></a>
-
-### new Stack([stack_size])
+### `Stack.constructor`
 Builds a Stack.
 
 
@@ -191,54 +189,92 @@ Builds a Stack.
 | --- | --- | --- | --- |
 | [stack_size] | <code>number</code> | <code>1000</code> | The initial stack capacity. |
 
-<a name="Stack+is_full"></a>
+Example:
+```javascript
+    // Make a stack with initial capacity 40.
+    let my_stack = new Stack(40);
+```
 
-### stack.is\_full() ⇒ <code>boolean</code>
+### `Stack.is_full`
 Find out if the stack is full.
 
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
-**Returns**: <code>boolean</code> - True if the stack is full.  
-<a name="Stack+resize"></a>
+Example:
+```javascript
+    my_stack.is_full(); // False here
+
+    // Load up the stack:
+    for (let i = 0; i < 40; i++) {
+        my_stack.push(i);
+    }
+
+    my_stack.is_full(); // True, since the capacity is 40 and automatic resizing has not happened.
+```
 
 ### stack.resize()
 Double the capacity of the stack.
 
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
-<a name="Stack+is_empty"></a>
+Example:
+```javascript
+    my_stack.is_full(); // True here, since it's been loaded up (continuation of prior example)
+
+    my_stack.resize();
+
+    my_stack.is_full(); // False - the capacity is now 80.
+```
 
 ### stack.is\_empty() ⇒ <code>boolean</code>
 Find out if the stack is empty.
 
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
-**Returns**: <code>boolean</code> - True if the stack is empty.  
-<a name="Stack+push"></a>
+Example:
+```javascript
+    my_stack.is_empty(); // False here, since 40 elements are in the stack (continuation of prior example)
 
-### stack.push(element)
+    // Unload the stack:
+    for (let i = 0; i < 40; i++) {
+        my_stack.pop();
+    }
+
+    my_stack.is_empty(); // True, since there is nothing left in the stack.
+```
+
+### `Stack.push`
 Add an element to the stack.
-
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | element | <code>\*</code> | The element to add to the stack. |
 
-<a name="Stack+pop"></a>
+Example:
+```javascript
+    // Load up the stack:
+    for (let i = 0; i < 40; i++) {
+        my_stack.push(i);
+    }
+```
 
-### stack.pop() ⇒ <code>\*</code>
-Remove an element from the stack.
+### `Stack.pop`
+Remove and return an element from the stack.
 
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
-**Returns**: <code>\*</code> - The element removed from the stack.  
-<a name="Stack+put"></a>
+Example:
+```javascript
+    // Continued from prior example, where stack is filled with numbers: 0, 1, ... 39:
+    console.log(my_stack.pop()); // Logs 39
+    console.log(my_stack.pop()); // Logs 38
+```
 
-### stack.put(elements)
-Add multiple elements to the stack.
-
-**Kind**: instance method of [<code>Stack</code>](#Stack)  
+### `Stack.put`
+Add multiple elements to the stack in order.
 
 | Param | Type | Description |
 | --- | --- | --- |
 | elements | <code>Iterable</code> | As an iterable, the collection of elements to add to the stack. |
+
+Example:
+```javascript
+    // Continued from prior example - my_stack is filled with numbers from 0 to 37
+    my_stack.put([38, 39, 40]);
+    console.log(my_stack.pop()); // Logs 40
+```
 
 <a name="Queue"></a>
 
