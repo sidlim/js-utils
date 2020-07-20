@@ -453,7 +453,7 @@ Methods:
 Construct a graph.
 
 | Param | Type | Default | Description |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | [E] | <code>Adjacency_List</code> | <code>null</code> | An Adjacency List to represent the graph. |
 | [V_data] | <code>Object</code> | <code>{}</code> | Additional data to be added to the graph |
 
@@ -466,7 +466,7 @@ Example:
 Add a vertex to the graph.
 
 | Param | Type | Default | Description |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | neighbors | <code>Array.&lt;number&gt;</code> |  | The neighbors of the node being added |
 | [vertex_data] | <code>Object</code> | <code>{}</code> | Additional data to be added to the graph |
 
