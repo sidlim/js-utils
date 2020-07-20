@@ -395,7 +395,7 @@ Build an adjacency list.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| [adj_matrix] | <code>Array.&lt;Array.&lt;number&gt;&gt;</code> | <code>[]</code> | An adjacency matrix to convert into an adjacency list. |
+| [adj_matrix] | number[][] | <code>[]</code> | An adjacency matrix to convert into an adjacency list. |
 
 Example:
 ```javascript
@@ -408,7 +408,7 @@ Add a vertex to the graph after initialization.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| neighbors | <code>Array.&lt;number&gt;</code> | A collection of the added vertex's neighboring vertices. |
+| neighbors | number[] | A collection of the added vertex's neighboring vertices. |
 
 Example:
 ```javascript
