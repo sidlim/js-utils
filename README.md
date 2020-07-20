@@ -317,7 +317,7 @@ Example:
     my_queue.is_full(); // True, since the capacity is 40 and automatic resizing has not happened.
 ```
 
-### queue.resize()
+### `Queue.resize()`
 Double the capacity of the queue.
 
 Example:
@@ -329,7 +329,7 @@ Example:
     my_queue.is_full(); // False - the capacity is now 80.
 ```
 
-### queue.is\_empty() ⇒ <code>boolean</code>
+### `Queue.is_empty`
 Find out if the queue is empty.
 
 Example:
@@ -383,7 +383,7 @@ Example:
 ```
 
 
-## Adjacency\_List
+## `Adjacency_List`
 An Adjacency List class, for use in graphs. Stores connectivity data.  
 Methods:
  - [`constructor`](#Adjacency_Listconstructor) ` :: Adjacency_List` - Initialize an adjacency list.
@@ -438,7 +438,7 @@ Example:
     // 0
 ```
 
-## Graph
+## `Graph`
 An unweighted Graph class. Stores vertex information and wraps the adjacency matrix and adjacency 
 list classes to provide functionality like search, ordering, dynamic programming, etc.  
 Methods:
