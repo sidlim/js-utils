@@ -33,8 +33,8 @@ class Sequence {
 
     /**
      * Get an external iterator from an iterable (generator).
-     * @param {Iterable | Sequence} The iterable (generator) to extract an iterator from
-     * @returns {Iterator} The iterator from the iterable (generator) object
+     * @param {Iterable | Sequence} iterable The iterable (generator) to extract an iterator from
+     * @returns {Iterator} The iterable from the iterable (generator) object
      */
     static get_iterator(iterable) {
 
@@ -46,6 +46,29 @@ class Sequence {
         }
         else {
             return(iterable());
+        }
+
+    }
+
+    /**
+     * Function to quickly wrap an iterable into a Sequence object
+     * @param {Iterable} iterable The Iterable object to wrap
+     */
+    static wrap(iterable) {
+        return(new Sequence(iterable));
+    }
+
+    /**
+     * Unwrap a sequence and expose the iterator inside.
+     * @returns {Iterator} The iterable from the sequence object.
+     */
+    unwrap() {
+
+        if (this.iterable[Symbol.iterator]) {
+            return(this.iterable[Symbol.iterator]);
+        }
+        else {
+            return(this.iterable);
         }
 
     }
