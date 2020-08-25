@@ -15,7 +15,9 @@ A set of tools to make the creation of web content easier.
 A Sequence class for better tools for iterables.  
 Methods:
 - [`constructor`](#Sequenceconstructor) `  :: Iterable -> Sequence ` - Turn an iterable into a Sequence object.
-- [`go`](#Sequencego) `  :: void -> Iterable ` - Get a generator from a Sequence object.
+- [`go`](#Sequencego) `  :: void -> Iterator ` - Get an iterator from a Sequence object.
+- [`wrap`](#Sequencewrap) `  :: Iterable -> Sequence ` - Alias for the constructor; turn an iterable into a Sequence object.
+- [`unwrap`](#Sequenceunwrap) `  :: void -> Iterable ` - Get an iterable from a Sequence object.
 - [`map`](#Sequencemap) `  :: Function (a -> b) -> Sequence` - Compose a function with the current Sequence object.
 - [`filter`](#Sequencefilter) `  :: Function (a -> Boolean) -> Sequence` - Filter the current Sequence object given a key function.
 - [`slice`](#Sequenceslice) `  :: Number -> Number -> Sequence` - Pick a contiguous subsequence of the Sequence object.
@@ -60,6 +62,34 @@ Example:
     let weird_iterator = function * () {
         yield Pi_digits *
         yield 'That\'s all I got!'
+    }
+```
+
+### `Sequence.wrap`
+Wrap an iterable into a Sequence Object, just like the constructor.  
+
+Example:
+```javascript
+    // Set up a generator function for use below:
+    function * numbers() {
+        let i = 1;
+        while (true) {
+            yield i++;
+        }
+        return;
+    }
+
+    let Natural_numbers = Sequence.wrap(numbers);
+    let E_digits = Sequence.wrap([2,7,1,8,2,8,1,8,2,8,4]);
+```
+
+### `Sequence.unwrap`
+Expose the iterable from a Sequence object. Allows you to wrap an iterable, compose it, and then unwrap it for easy use as a vanilla JS iterable.  
+
+Example:
+```javascript
+    for (var digit of E_digits.unwrap()) {
+        console.log('The next digit of e is ${digit}', digit);
     }
 ```
 
