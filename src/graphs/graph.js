@@ -1,3 +1,5 @@
+import Adjacency_List from './adj-list.js';
+
 /**
  * An unweighted Graph class. Stores vertex information and wraps the adjacency matrix and adjacency 
  * list classes to provide functionality like search, ordering, dynamic programming, etc.
@@ -123,3 +125,5 @@ class Graph {
     }
 
 }
+
+export default Graph;

@@ -44,3 +44,5 @@ class Adjacency_List {
     }
 
 }
+
+export default Adjacency_List;
