@@ -14,7 +14,7 @@ let Data_Containers = {
     'Disjoint_Set': Disjoint_Set
 };
 
-let More_Math = {
+let Math = {
     'Equivalence_Relation': Equivalence_Relation,
     'Group': Group,
     'Ring': Ring,
