@@ -18,14 +18,13 @@ class Queue {
      * @param {number} [queue_size = 1000] The initial queue capacity.
      */
     constructor(queue_size = 1000) {
-        if (queue_size == null) {
-            this.size = this.default_size;
-        }
-        else {
-            this.size = queue_size;
-        }
+        this.size = queue_size;
         this.container = [];
         this.container.length = queue_size;
+        this.head_idx = 0;
+        this.tail_idx = 0;
+        this.element_count = 0;
+        this.get = this.dequeue;
     }
 
     /**

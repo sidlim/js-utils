@@ -19,7 +19,10 @@ class Stack {
     constructor(stack_size = 1000) {
         this.size = stack_size;
         this.container = [];
-        this.container.length = stack_size
+        this.container.length = stack_size;
+        this.element_count = 0;
+        this.head_idx = 0;
+        this.get = this.pop;
     }
 
     /**
