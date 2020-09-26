@@ -3,7 +3,7 @@ A set of tools to make the creation of web content easier.
 ## Modules/Code Organization
 - `assorted-utilities/`
   - [sequence.js](#Sequence) - Better tools for iterables.
-- `data-structures/`
+- `data-containers/`
   - [stack.js](#Stack) - Implementation of a stack.
   - [queue.js](#Queue) - Implementation of a queue.
 - `graphs/`
