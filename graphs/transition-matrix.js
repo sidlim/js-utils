@@ -4,7 +4,6 @@
 class Transition_Matrix {
 
     edge_matrix;
-    vertex_count;
 
     /**
      * Build an adjacency matrix, storing data about edges.
@@ -16,15 +15,6 @@ class Transition_Matrix {
         this.vertex_count = adj_matrix.length;
         this.edge_matrix = adj_matrix;
 
-    }
-
-    /**
-     * Add a vertex to the graph after initialization.
-     * @param {number[]} neighbors A collection (array) consisting of neighbor data.
-     */
-    add_vertex(neighbors) {
-        this.edge_matrix[this.vertex_count] = neighbors;
-        this.vertex_count += 1;
     }
 
     /**

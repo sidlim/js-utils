@@ -244,3 +244,5 @@ class Sequence {
         return(new Sequence(integrated_iterator));
     }
 }
+
+export default Sequence;
