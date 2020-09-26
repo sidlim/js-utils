@@ -21,4 +21,4 @@ let Math = {
     'Field': Field
 };
 
-export {Data_Containers, More_Math, Graph, Sequence};
+export {Data_Containers, Math, Graph, Sequence};
