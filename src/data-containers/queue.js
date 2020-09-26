@@ -3,12 +3,14 @@
  */
 class Queue {
 
+    /*
     size = 0;
     element_count = 0;
     container;
     head_idx = 0;
     tail_idx = 0;
     get = this.dequeue;
+    */
 
     /**
      * Builds a queue.

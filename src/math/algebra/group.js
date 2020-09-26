@@ -2,7 +2,9 @@ import Monoid from './monoid.js';
 
 class Group extends Monoid {
 
+    /*
     inv;
+    */
 
     constructor(op, id, inv, eq_rel) {
         super(op, id, eq_rel);

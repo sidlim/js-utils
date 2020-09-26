@@ -2,8 +2,10 @@ import Equivalence_Relation from './eq-rel.js';
 
 class Monoid extends Equivalence_Relation {
 
+    /*
     id_el;
     op_fn;
+    */
 
     constructor(op, id, eq_rel) {
         super(eq_rel);

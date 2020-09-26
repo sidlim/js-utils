@@ -1,4 +1,5 @@
 import Adjacency_List from './adj-list.js';
+import Queue from '../data-containers/queue.js'
 
 /**
  * An unweighted Graph class. Stores vertex information and wraps the adjacency matrix and adjacency 
@@ -6,8 +7,10 @@ import Adjacency_List from './adj-list.js';
  */
 class Graph {
 
+    /*
     V_data;
     E;
+    */
 
     /**
      * Build a Graph.

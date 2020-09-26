@@ -7,19 +7,16 @@ import Group from './math/algebra/group.js';
 import Ring from './math/algebra/ring.js';
 import Field from './math/algebra/field.js';
 
-let js_utils = {
-    'Sequence': Sequence,
-    'data_containers': {
-        'Stack': Stack,
-        'Queue': Queue
-        },
-    'Graph': Graph,
-    'math': {
-        'Equivalence_Relation': Equivalence_Relation,
-        'Group': Group,
-        'Ring': Ring,
-        'Field': Field
-        }
-    };
+let Data_Containers = {
+    'Stack': Stack,
+    'Queue': Queue
+};
 
-export default js_utils;
+let More_Math = {
+    'Equivalence_Relation': Equivalence_Relation,
+    'Group': Group,
+    'Ring': Ring,
+    'Field': Field
+};
+
+export {Data_Containers, More_Math, Graph, Sequence};

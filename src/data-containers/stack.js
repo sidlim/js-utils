@@ -3,11 +3,13 @@
  */
 class Stack {
 
+    /*
     size = 0;
     element_count = 0;
     container;
     head_idx = 0;
     get = this.pop;
+    */
 
     /**
      * Builds a Stack.

@@ -4,11 +4,13 @@ import Group from './group.js';
 
 class Ring extends Equivalence_Relation {
 
+    /*
     add;
     additive_id;
     additive_inv;
     multiply;
     multiplicative_id;
+    */
 
     constructor(add_op, mul_op, add_id, mul_id, add_inv, eq_rel) {
         super(eq_rel);

@@ -3,12 +3,14 @@ import Group from './group.js';
 
 class Field extends Equivalence_Relation {
 
+    /*
     add;
     additive_id;
     additive_inv;
     multiply;
     multiplicative_id;
     multiplicative_inv;
+    */
 
     constructor(add_op, mul_op, add_id, mul_id, add_inv, mul_inv, eq_rel) {
         super(eq_rel);

@@ -3,8 +3,10 @@
  */
 class Adjacency_List {
 
+    /*
     edge_map;
     vertex_count = 0;
+    */
 
     /**
      * Build an adjacency list.
