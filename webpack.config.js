@@ -6,7 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "js_utils.js",
     library: "js_utils",
-    libraryTarget: "umd",
+    libraryTarget: "var",
   },
   module: {
     rules: [
