@@ -83,4 +83,4 @@ class Disjoint_Set {
 
 }
 
-export {Disjoint_Set};
+export default Disjoint_Set;
