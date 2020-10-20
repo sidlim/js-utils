@@ -22,11 +22,12 @@ class Trie {
                 next_node = curr_node.children.get(word[i]);
             }
             else {
-                next_node = new Node(i == word.length - 1);
+                next_node = new Node();
                 curr_node.children.set(word[i], next_node);
             }
             curr_node = next_node;
         }
+        curr_node.terminal = true;
     }
 
     find(word) {
