@@ -13,6 +13,9 @@ class Trie {
 
     add(word) {
         let curr_node = this.root;
+        if (word == "") {
+            curr_node.terminal = true;
+        }
         for (let i = 0; i < word.length; i++) {
             let next_node;
             if (curr_node.children.has(word[i])) {
