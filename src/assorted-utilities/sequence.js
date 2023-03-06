@@ -203,7 +203,7 @@ class Sequence {
             let y_output = y_iter.next();
 
             while (!x_output.done && !y_output.done) {
-                yield packager(x_output.value, y.output.value);
+                yield packager(x_output.value, y_output.value);
                 x_output = x_iter.next();
                 y_output = y_iter.next();
             }
@@ -243,6 +243,40 @@ class Sequence {
 
         return(new Sequence(integrated_iterator));
     }
-}
 
-export default Sequence;
+    /**
+     * Cartesion product of 2 sequences - create a new sequence given another.
+     * @param {Iterable} seq The sequence to cartesian product the current sequence with.
+     * @returns {Sequence} The cartesian product of the sequences, with the first element being from the parent sequence and the second from seq.
+     */
+    prod(iterable, packager = (x, y) => [x, y]) {
+
+        let gen = this.iterable;
+    
+        let producted_iterator = function * () {
+    
+            let outer_iter = Sequence.get_iterator(gen);
+            let outer_output = outer_iter.next();
+    
+            while (!outer_output.done) {
+
+                let inner_iter = Sequence.get_iterator(iterable);
+                let inner_output = inner_iter.next();
+
+                while (!inner_output.done) {
+
+                    yield packager(outer_output.value, inner_output.value)
+                    inner_output = inner_iter.next()
+
+                }
+
+                outer_output = outer_iter.next();
+
+            }
+
+            return;
+        }
+
+        return(new Sequence(producted_iterator));
+    }
+}
